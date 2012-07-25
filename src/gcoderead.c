@@ -90,11 +90,20 @@ main(
 	gcode_init(g);
 
 	g_processor_p g_g = g_processor_register(g);	// main gcode interpreter
-	g_ad_p		g_antidot = g_antidot_register(g);
-	g_aj_p		g_antijerk = g_aj_register(g);
+	
+	for (int i = 1; i < argc; i++) {
+		if (!strcmp(argv[i], "-antidot") || !strcmp(argv[i], "--antidot")) {
+			g_ad_p		g_antidot = g_antidot_register(g);
+			argv[i] = NULL;
+		} else if (!strcmp(argv[i], "-antijerk") || !strcmp(argv[i], "--antijerk")) {
+			g_aj_p		g_antijerk = g_aj_register(g);
+			argv[i] = NULL;
+		}
+	}
 	g_cleaner_p g_cleaner = g_cleaner_register(g);
 
-	for (int i = 1; i < argc; i++) {
+
+	for (int i = 1; i < argc; i++) if (argv[i]) {
 		/*
 		 * Pass arguments to filters first
 		 */

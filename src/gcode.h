@@ -39,8 +39,8 @@ enum {
  * "digested" gcode command
  */
 typedef struct gcode_cmd_t {
-	uint8_t 	cmd;		// "G", "M" etc
-	uint16_t 	cid;		// GXXX, MXXX etc
+	uint32_t 	cmd : 8,	// "G", "M" etc
+				cid : 16;	// GXXX, MXXX etc
 	uint32_t	index;		// command index number
 	uint16_t 	p;			// bitmask for the present parameters
 	float 		v[G_MAX];	// parameters
